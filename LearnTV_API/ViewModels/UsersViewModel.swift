@@ -12,7 +12,7 @@ class UsersViewModel {
     var apiHandler = APIhandler()
     var dataSource = [User]()
     
-    func getDataFromAPIhandler (postsURL: String, completionBlock: @escaping completionBlock) {
+    func getPostsFromAPIhandler (postsURL: String, completionBlock: @escaping completionBlock) {
         apiHandler.getPostsFromAPI(withURL: postsURL) { [weak self] (users, err) in
             self?.dataSource = users!
             completionBlock(users!, nil)
@@ -28,20 +28,18 @@ class UsersViewModel {
         return user
     }
     
-    func getCellData (index: Int) -> String {
+    func getUserCellData (index: Int) -> String {
         let user = self.getUserAtIndex(index: index)
         let userId = user.userId ?? 0
         let id = user.id ?? 0
 //        let body = user.body ?? ""
         let title = user.title ?? ""
-        let rep = "UserId- \(userId) " + "ID- \(id) " + "Title- \(title)"
-        return rep
+        return "UserId- \(userId) ID- \(id) Title- \(title)"
     }
     
-    func getDetailCellData (index: Int) -> String {
+    func getUserCellDetail (index: Int) -> String {
         let user = self.getUserAtIndex(index: index)
         let body = user.body ?? ""
-        let detail = "Body- \(body)"
-        return detail
+        return "Body- \(body)"
     }
 }

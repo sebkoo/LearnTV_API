@@ -17,13 +17,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        usersViewModel.getDataFromAPIhandler(postsURL: EndPoint.postsURL) { (_, _) in
+        usersViewModel.getPostsFromAPIhandler(postsURL: EndPoint.postsURL) { (_, _) in
             DispatchQueue.main.async { [weak self] in
                 self?.postsTableView.reloadData()
             }
         }
         
-        commentsViewModel.getDataFromAPIhandler(commentsURL: EndPoint.postsURL) { (_, _) in
+        commentsViewModel.getCommentsFromAPIhandler(commentsURL: EndPoint.commentsURL) { (_, _) in
             DispatchQueue.main.async { [weak self] in
                 self?.commentsTableView.reloadData()
             }
@@ -41,12 +41,12 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var output = UITableViewCell()
         if tableView == postsTableView, let cell = tableView.dequeueReusableCell(withIdentifier: "postCell") {
-            cell.textLabel?.text = usersViewModel.getCellData(index: indexPath.row)
-            cell.detailTextLabel?.text = usersViewModel.getDetailCellData(index: indexPath.row)
+            cell.textLabel?.text = usersViewModel.getUserCellData(index: indexPath.row)
+            cell.detailTextLabel?.text = usersViewModel.getUserCellDetail(index: indexPath.row)
             output = cell
         } else if tableView == commentsTableView, let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell") {
-            cell.textLabel?.text = commentsViewModel.getCellData(index: indexPath.row)
-            cell.detailTextLabel?.text = commentsViewModel.getDetailCellData(index: indexPath.row)
+            cell.textLabel?.text = commentsViewModel.getPostCellData(index: indexPath.row)
+            cell.detailTextLabel?.text = commentsViewModel.getPostCellDetail(index: indexPath.row)
             output = cell
         }
         return output
